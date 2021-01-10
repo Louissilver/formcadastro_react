@@ -4,21 +4,28 @@ import { TextField, Button, Switch, FormControlLabel } from '@material-ui/core';
 // Criamos um function component
 // Trata-se de uma função que retorna um componente em jsx
 // Geralmente function components são stateless components
-function FormularioCadastro() {
-    const [nome, setNome] = useState("Luís");
+function FormularioCadastro({ onSubmit, validarCPF }) {
+    const [nome, setNome] = useState("");
+    const [sobrenome, setSobrenome] = useState("");
+    const [cpf, setCpf] = useState("");
+    const [promocoes, setPromocoes] = useState(true);
+    const [novidades, setNovidades] = useState(true);
+    const [erros, setErros] = useState({
+        cpf: {
+            valido: true,
+            texto: ""
+        }
+    });
     return (
         <form onSubmit={(event) => {
             event.preventDefault();
-            console.log(nome);
+            onSubmit({ nome, sobrenome, cpf, promocoes, novidades });
         }}>
             <TextField
-            value={nome}
-            onChange={(event) => {
-                setNome(event.target.value);
-                if(nome.length >= 3){
-                    setNome(nome.substring(0, 3))
-                }
-            }}
+                value={nome}
+                onChange={(event) => {
+                    setNome(event.target.value);
+                }}
                 id="nome"
                 label="Nome" /* Gera um label para o campo */
                 variant="outlined" /* Muda a forma do input para uma com linhas ao redor */
@@ -29,6 +36,10 @@ function FormularioCadastro() {
             />
 
             <TextField
+                value={sobrenome}
+                onChange={(event) => {
+                    setSobrenome(event.target.value);
+                }}
                 id="sobrenome"
                 label="Sobrenome"
                 variant="outlined"
@@ -38,6 +49,17 @@ function FormularioCadastro() {
             />
 
             <TextField
+                value={cpf}
+                onChange={(event) => {
+                    setCpf(event.target.value);
+                }}
+
+                onBlur={(event) => {
+                    const ehValido = validarCPF(event.target.value);
+                    setErros({ cpf: ehValido })
+                }}
+                error={!erros.cpf.valido}
+                helperText={erros.cpf.texto}
                 id="cpf"
                 label="CPF"
                 variant="outlined"
@@ -48,17 +70,29 @@ function FormularioCadastro() {
 
             <FormControlLabel
                 label="Promoções"
-                control={<Switch name="promocoes" defaultChecked color="primary" />}
+                control={
+                    <Switch
+                        checked={promocoes}
+                        onChange={(event) => {
+                            setPromocoes(event.target.checked)
+                        }}
+                        name="promocoes"
+                        color="primary" />
+                }
             />
 
-            <FormControlLabel /* FormControlLabel serve para aplicar label a certos elementos */
+            {/* FormControlLabel serve para aplicar label a certos elementos */
+            /* Switch é um tipo de checkbox estilizado */}
+            <FormControlLabel
                 label="Novidades"
                 control={
-                    <Switch /* Switch é um tipo de checkbox estilizado */
+                    <Switch
+                        checked={novidades}
+                        onChange={(event) => {
+                            setNovidades(event.target.checked)
+                        }}
                         name="novidades"
-                        defaultChecked
-                        color="primary"
-                    />
+                        color="primary" />
                 }
             />
 
