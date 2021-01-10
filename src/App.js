@@ -1,14 +1,17 @@
 import { Component } from 'react';
 import './App.css';
 import FormularioCadastro from './components/FormularioCadastro/FormularioCadastro';
-import { Container } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 
 class App extends Component {
   render() {
 
     return (
-      <Container maxWidth="sm" component="article">
-        <h1>Formulário de cadastro</h1>
+      <Container
+        maxWidth="sm" // Deixa a largura máxima pequena
+        component="article" // O tipo de componente renderizado será um <article>
+      >
+        <Typography variant="h3" component="h1" align="center">Formulário de cadastro</Typography>
         <FormularioCadastro />
       </Container>
     );

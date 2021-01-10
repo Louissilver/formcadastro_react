@@ -1,6 +1,5 @@
 import React from 'react';
-import Button from "@material-ui/core/Button";
-import TextField from '@material-ui/core/TextField';
+import { TextField, Button, Switch, FormControlLabel } from '@material-ui/core';
 
 // Criamos um function component
 // Trata-se de uma função que retorna um componente em jsx
@@ -9,7 +8,7 @@ function FormularioCadastro() {
     return (
         <form action="">
             <TextField
-                id="nome" 
+                id="nome"
                 label="Nome" /* Gera um label para o campo */
                 variant="outlined" /* Muda a forma do input para uma com linhas ao redor */
                 placeholder="Ex: João"
@@ -36,11 +35,15 @@ function FormularioCadastro() {
                 margin="normal"
             />
 
-            <label htmlFor="">Promoções</label>
-            <input type="checkbox" />
+            <FormControlLabel
+                label="Promoções"
+                control={<Switch name="promocoes" defaultChecked color="primary" />}
+            />
 
-            <label htmlFor="">Novidades</label>
-            <input type="checkbox" />
+            <FormControlLabel
+                label="Novidades"
+                control={<Switch name="novidades" defaultChecked color="primary" />}
+            />
 
             <Button
                 type="submit"
