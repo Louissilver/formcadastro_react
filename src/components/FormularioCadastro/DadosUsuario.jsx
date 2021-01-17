@@ -23,8 +23,7 @@ function DadosUsuario() {
         margin="normal"
       />
       <Button type="submit" variant="contained" color="primary">
-        {" "}
-        Cadastrar{" "}
+        Cadastrar
       </Button>
     </form>
   );
