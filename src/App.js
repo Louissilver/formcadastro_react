@@ -12,13 +12,13 @@ class App extends Component {
         component="article" // O tipo de componente renderizado será um <article>
       >
         <Typography variant="h3" component="h1" align="center">Formulário de cadastro</Typography>
-        <FormularioCadastro onSubmit={onSubmitForm} validarCPF={validarCPF} />
+        <FormularioCadastro onSubmit={aoEnviar} validarCPF={validarCPF} />
       </Container>
     );
   }
 }
 
-function onSubmitForm(dados) {
+function aoEnviar(dados) {
   console.log(dados);
 }
 

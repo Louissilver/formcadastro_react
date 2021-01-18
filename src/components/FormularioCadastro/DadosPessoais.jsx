@@ -4,7 +4,7 @@ import { TextField, Button, Switch, FormControlLabel } from "@material-ui/core";
 // Criamos um function component
 // Trata-se de uma função que retorna um componente em jsx
 // Geralmente function components são stateless components
-function DadosPessoais({ onSubmit, validarCPF }) {
+function DadosPessoais({ aoEnviar, validarCPF }) {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [cpf, setCpf] = useState("");
@@ -20,7 +20,7 @@ function DadosPessoais({ onSubmit, validarCPF }) {
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        onSubmit({ nome, sobrenome, cpf, promocoes, novidades });
+        aoEnviar({ nome, sobrenome, cpf, promocoes, novidades });
       }}
     >
       <TextField
