@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { TextField, Button, Switch, FormControlLabel } from "@material-ui/core";
+import ValidacoesCadastro from "../../contexts/ValidacoesCadastro";
 
 // Criamos um function component
 // Trata-se de uma função que retorna um componente em jsx
 // Geralmente function components são stateless components
-function DadosPessoais({ aoEnviar, validacoes }) {
+function DadosPessoais({ aoEnviar }) {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [cpf, setCpf] = useState("");
@@ -15,6 +16,8 @@ function DadosPessoais({ aoEnviar, validacoes }) {
     nome: { valido: true, texto: "" },
     sobrenome: { valido: true, texto: "" },
   });
+
+  const validacoes = useContext(ValidacoesCadastro);
 
   function validarCampos(event) {
     const { name, value } = event.target;
