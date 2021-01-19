@@ -4,23 +4,41 @@ import { TextField, Button, Switch, FormControlLabel } from "@material-ui/core";
 // Criamos um function component
 // Trata-se de uma função que retorna um componente em jsx
 // Geralmente function components são stateless components
-function DadosPessoais({ aoEnviar, validarCPF }) {
+function DadosPessoais({ aoEnviar, validacoes }) {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [cpf, setCpf] = useState("");
   const [promocoes, setPromocoes] = useState(true);
   const [novidades, setNovidades] = useState(true);
   const [erros, setErros] = useState({
-    cpf: {
-      valido: true,
-      texto: "",
-    },
+    cpf: { valido: true, texto: "" },
+    nome: { valido: true, texto: "" },
+    sobrenome: { valido: true, texto: "" },
   });
+
+  function validarCampos(event) {
+    const { name, value } = event.target;
+    const novoEstado = { ...erros };
+    novoEstado[name] = validacoes[name](value);
+    setErros(novoEstado);
+  }
+
+  function possoEnviar() {
+    for (let campo in erros) {
+      if (!erros[campo].valido) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        aoEnviar({ nome, sobrenome, cpf, promocoes, novidades });
+        if (possoEnviar()) {
+          aoEnviar({ nome, sobrenome, cpf, promocoes, novidades });
+        }
       }}
     >
       <TextField
@@ -28,9 +46,13 @@ function DadosPessoais({ aoEnviar, validarCPF }) {
         onChange={(event) => {
           setNome(event.target.value);
         }}
+        onBlur={validarCampos}
+        error={!erros.nome.valido}
+        helperText={erros.nome.texto}
         id="nome"
         label="Nome" /* Gera um label para o campo */
         variant="outlined" /* Muda a forma do input para uma com linhas ao redor */
+        name="nome"
         placeholder="Ex: João"
         fullWidth /* Permite o componente ocupar todo o espaço do elemento pai */
         margin="normal" /* Gera uma margem normal e mantém o tamanho do componente
@@ -42,8 +64,12 @@ function DadosPessoais({ aoEnviar, validarCPF }) {
         onChange={(event) => {
           setSobrenome(event.target.value);
         }}
+        onBlur={validarCampos}
+        error={!erros.sobrenome.valido}
+        helperText={erros.sobrenome.texto}
         id="sobrenome"
         label="Sobrenome"
+        name="sobrenome"
         variant="outlined"
         placeholder="Ex: Silva"
         fullWidth
@@ -55,14 +81,12 @@ function DadosPessoais({ aoEnviar, validarCPF }) {
         onChange={(event) => {
           setCpf(event.target.value);
         }}
-        onBlur={(event) => {
-          const ehValido = validarCPF(event.target.value);
-          setErros({ cpf: ehValido });
-        }}
+        onBlur={validarCampos}
         error={!erros.cpf.valido}
         helperText={erros.cpf.texto}
         id="cpf"
         label="CPF"
+        name="cpf"
         variant="outlined"
         placeholder="Ex: 11122233300"
         fullWidth
@@ -100,7 +124,7 @@ function DadosPessoais({ aoEnviar, validarCPF }) {
       />
 
       <Button type="submit" variant="contained" color="primary">
-        Cadastrar
+        Próximo
       </Button>
     </form>
   );
