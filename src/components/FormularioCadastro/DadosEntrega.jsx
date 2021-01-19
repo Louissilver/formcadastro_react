@@ -1,7 +1,7 @@
+import React, { useState } from "react";
 import { Button, TextField } from "@material-ui/core";
-import React from "react";
 
-function DadosEntrega([{ aoEnviar }]) {
+function DadosEntrega({ aoEnviar }) {
   const [cep, setCep] = useState("");
   const [endereco, setEndereco] = useState("");
   const [numero, setNumero] = useState("");

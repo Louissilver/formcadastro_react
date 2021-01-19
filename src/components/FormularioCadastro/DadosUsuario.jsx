@@ -1,5 +1,5 @@
+import React, { useState } from "react";
 import { Button, TextField } from "@material-ui/core";
-import React from "react";
 
 function DadosUsuario({ aoEnviar }) {
   const [email, setEmail] = useState("");
@@ -8,7 +8,7 @@ function DadosUsuario({ aoEnviar }) {
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        aoEnviar({email, senha});
+        aoEnviar({ email, senha });
       }}
     >
       <TextField
